@@ -1,0 +1,1090 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الموقع الشخصي والمهني الإبداعي</title>
+    <!-- Google Fonts: Cairo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Tailwind Custom Configuration for Dark/Light Mode & Theme Colors -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#10b981', // Emerald for editing/growth
+                            600: '#059669',
+                            700: '#047857',
+                        },
+                        secondary: {
+                            500: '#6366f1', // Indigo for marketing/strategy
+                            600: '#4f46e5',
+                        },
+                        accent: {
+                            500: '#f59e0b', // Amber for highlights/books
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        /* Glassmorphism utility */
+        .glass-effect {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .light .glass-effect {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        /* 3D Book perspective */
+        .book-container {
+            perspective: 1000px;
+        }
+        .book-spine {
+            transform: rotateY(-25deg);
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease;
+        }
+        .book-container:hover .book-spine {
+            transform: rotateY(0deg) scale(1.05);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen relative overflow-x-hidden light:bg-slate-50 light:text-slate-900">
+
+<div class="fixed inset-0 pointer-events-none z-0 opacity-40 dark:opacity-20">
+    <canvas id="particleCanvas" class="w-full h-full"></canvas>
+</div>
+
+<header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 glass-effect border-b border-slate-800/50 light:border-slate-200/50" id="mainHeader">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+        <!-- Logo / Brand Name -->
+        <a href="#hero" class="flex items-center gap-3 group">
+            <span class="w-10 h-10 rounded-xl bg-gradient-to-tr from-primary-500 to-secondary-500 flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-primary-500/20 group-hover:scale-105 transition-transform">
+                م
+            </span>
+            <div class="flex flex-col">
+                <span class="font-bold text-lg tracking-wide bg-gradient-to-r from-primary-400 to-secondary-400 bg-clip-text text-transparent">مدونة الاسم الشخصي</span>
+                <span class="text-xs text-slate-400 dark:text-slate-500 light:text-slate-600">تحرير محتوى وتسويق رقمي</span>
+            </div>
+        </a>
+
+        <!-- Desktop Navigation Menu -->
+        <nav class="hidden md:flex items-center gap-8">
+            <a href="#about" class="text-sm font-semibold hover:text-primary-400 transition-colors">من أنا</a>
+            <a href="#skills" class="text-sm font-semibold hover:text-primary-400 transition-colors">مهاراتي</a>
+            <a href="#books" class="text-sm font-semibold hover:text-primary-400 transition-colors">مؤلفاتي المطبوعة</a>
+            <a href="#articles" class="text-sm font-semibold hover:text-primary-400 transition-colors">المقالات والتدوين</a>
+            <a href="#experience" class="text-sm font-semibold hover:text-primary-400 transition-colors">مسيرتي المهنية</a>
+            <a href="#contact" class="text-sm font-semibold hover:text-primary-400 transition-colors">تواصل معي</a>
+        </nav>
+
+        <!-- Right action buttons: Language toggle / Theme Toggle / Contact button -->
+        <div class="flex items-center gap-4">
+            <!-- Theme Toggle Button -->
+            <button onclick="toggleTheme()" class="w-10 h-10 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 flex items-center justify-center transition-all border border-slate-700/50 light:bg-slate-200 light:hover:bg-slate-300 light:text-slate-800 light:border-slate-300" title="تبديل المظهر">
+                <i id="themeIcon" class="fa-solid fa-moon"></i>
+            </button>
+            
+            <a href="#contact" class="hidden lg:flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-primary-600 to-secondary-600 hover:from-primary-500 hover:to-secondary-500 text-white font-semibold text-sm shadow-lg shadow-primary-500/10 hover:shadow-primary-500/20 transition-all transform hover:-translate-y-0.5">
+                <span>ابدأ مشروعاً معي</span>
+                <i class="fa-solid fa-arrow-left-long text-xs"></i>
+            </a>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button onclick="toggleMobileMenu()" class="md:hidden w-10 h-10 rounded-xl bg-slate-800/80 text-slate-300 flex items-center justify-center border border-slate-700/50 light:bg-slate-200 light:text-slate-800" title="القائمة">
+                <i class="fa-solid fa-bars" id="mobileMenuIcon"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobileMenu" class="hidden md:hidden glass-effect border-b border-slate-800/80 py-6 px-4 flex flex-col gap-4 animate-fade-in">
+        <a href="#about" onclick="toggleMobileMenu()" class="block text-base font-semibold py-2 hover:text-primary-400">من أنا</a>
+        <a href="#skills" onclick="toggleMobileMenu()" class="block text-base font-semibold py-2 hover:text-primary-400">مهاراتي</a>
+        <a href="#books" onclick="toggleMobileMenu()" class="block text-base font-semibold py-2 hover:text-primary-400">مؤلفاتي المطبوعة</a>
+        <a href="#articles" onclick="toggleMobileMenu()" class="block text-base font-semibold py-2 hover:text-primary-400">المقالات والتدوين</a>
+        <a href="#experience" onclick="toggleMobileMenu()" class="block text-base font-semibold py-2 hover:text-primary-400">مسيرتي المهنية</a>
+        <a href="#contact" onclick="toggleMobileMenu()" class="block text-base font-semibold py-2 hover:text-primary-400">تواصل معي</a>
+        <a href="#contact" onclick="toggleMobileMenu()" class="mt-2 w-full text-center py-3 rounded-xl bg-gradient-to-r from-primary-600 to-secondary-600 text-white font-semibold block">
+            ابدأ مشروعاً معي
+        </a>
+    </div>
+</header>
+
+<section id="hero" class="relative pt-32 pb-20 md:pt-44 md:pb-32 flex items-center overflow-hidden z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative">
+        <!-- Abstract gradient blobs for aesthetic look -->
+        <div class="absolute -top-12 -left-12 w-96 h-96 bg-primary-500/10 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-12 -right-12 w-96 h-96 bg-secondary-500/10 rounded-full blur-3xl"></div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <!-- Hero Left: Text & Pitching -->
+            <div class="lg:col-span-7 space-y-6 text-right order-2 lg:order-1">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-500/10 text-primary-400 border border-primary-500/20 text-xs font-semibold">
+                    <span class="flex h-2 w-2 relative">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-primary-500"></span>
+                    </span>
+                    متاح للمشاريع الإبداعية والاستشارات
+                </div>
+                
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight">
+                    أصنع من الكلمات <br class="hidden sm:inline">
+                    <span class="bg-gradient-to-r from-primary-400 via-accent-500 to-secondary-400 bg-clip-text text-transparent">
+                        قيمة تسويقية وأثرية خالدة
+                    </span>
+                </h1>
+
+                <!-- Typewriter effect container -->
+                <p class="text-xl sm:text-2xl font-bold text-slate-300 dark:text-slate-300 light:text-slate-700 min-h-[40px]">
+                    أنا <span id="typewriter" class="text-primary-400 border-l-2 border-primary-400 animate-pulse pl-1"></span>
+                </p>
+
+                <p class="text-slate-400 dark:text-slate-400 light:text-slate-600 max-w-xl text-lg leading-relaxed">
+                    محرر، كاتب ومسوق محتوى ريادي. أساعد الشركات وصناع الأفكار في تحويل الكلمات إلى استراتيجيات تسويقية مؤثرة، وصياغة هويات إبداعية تجذب الجمهور وتصنع فارقاً مستداماً في سوق العمل.
+                </p>
+
+                <!-- Action CTA group -->
+                <div class="flex flex-wrap gap-4 pt-4">
+                    <a href="#books" class="px-8 py-4 rounded-xl bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-500 hover:to-primary-400 text-white font-bold text-base shadow-lg shadow-primary-500/20 hover:scale-[1.02] transition-all flex items-center gap-3">
+                        <i class="fa-solid fa-book-open"></i>
+                        <span>تصفح مؤلفاتي</span>
+                    </a>
+                    <a href="#articles" class="px-8 py-4 rounded-xl bg-slate-900 border border-slate-800 hover:bg-slate-800 hover:border-slate-700 text-slate-200 font-bold text-base hover:scale-[1.02] transition-all flex items-center gap-3 light:bg-white light:border-slate-300 light:text-slate-800 light:hover:bg-slate-100">
+                        <i class="fa-regular fa-file-lines"></i>
+                        <span>قراءة مقالاتي</span>
+                    </a>
+                </div>
+
+                <!-- Trusted/Key metrics in brief -->
+                <div class="grid grid-cols-3 gap-6 pt-8 border-t border-slate-900 dark:border-slate-900 light:border-slate-200">
+                    <div>
+                        <span class="block text-3xl font-extrabold text-primary-400">+7</span>
+                        <span class="text-xs text-slate-400">سنوات من الخبرة</span>
+                    </div>
+                    <div>
+                        <span class="block text-3xl font-extrabold text-secondary-400">+50</span>
+                        <span class="text-xs text-slate-400">مشروعاً تسويقياً ناجحاً</span>
+                    </div>
+                    <div>
+                        <span class="block text-3xl font-extrabold text-accent-500">+100k</span>
+                        <span class="text-xs text-slate-400">كلمة تم كتابتها وتحريرها</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Right: Dynamic Graphics showing personal avatar/art -->
+            <div class="lg:col-span-5 flex justify-center order-1 lg:order-2">
+                <div class="relative w-72 h-72 sm:w-80 sm:h-80 lg:w-96 lg:h-96">
+                    <!-- Rotating gradient outline -->
+                    <div class="absolute inset-0 bg-gradient-to-tr from-primary-500 via-accent-500 to-secondary-500 rounded-3xl opacity-30 blur-2xl animate-pulse"></div>
+                    <div class="absolute inset-2 bg-slate-900 rounded-3xl overflow-hidden border border-slate-800 flex items-center justify-center light:bg-white light:border-slate-200">
+                        <!-- Custom designed graphic profile badge -->
+                        <div class="text-center p-6 space-y-6">
+                            <div class="w-32 h-32 mx-auto rounded-full bg-gradient-to-tr from-primary-500 to-secondary-500 p-1">
+                                <!-- Placeholders for professional portrait or high-end illustration -->
+                                <img src="https://placehold.co/400x400/0f172a/10b981?text=%D9%85%D8%AD%D8%AA%D8%B1%D9%81" alt="الملف التعريفي" class="w-full h-full object-cover rounded-full border-4 border-slate-900" onerror="this.src='https://placehold.co/400x400/0f172a/10b981?text=Me'">
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold">الاسم الشخصي الكامل</h3>
+                                <p class="text-sm text-primary-400 font-semibold mt-1">مستشار الكتابة والتسويق الرقمي</p>
+                            </div>
+                            <div class="flex justify-center gap-3">
+                                <span class="px-3 py-1 bg-slate-800 text-slate-300 rounded-lg text-xs light:bg-slate-100 light:text-slate-800">#مؤلف</span>
+                                <span class="px-3 py-1 bg-slate-800 text-slate-300 rounded-lg text-xs light:bg-slate-100 light:text-slate-800">#محرر_أدبي</span>
+                                <span class="px-3 py-1 bg-slate-800 text-slate-300 rounded-lg text-xs light:bg-slate-100 light:text-slate-800">#خبير_SEO</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="about" class="py-20 bg-slate-900/40 relative z-10 light:bg-slate-100/50">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-16">
+            <h2 class="text-3xl font-extrabold text-white dark:text-white light:text-slate-900">نبذة إبداعية ومحطات مضيئة</h2>
+            <div class="h-1 w-20 bg-primary-500 mx-auto mt-4 rounded-full"></div>
+            <p class="text-slate-400 dark:text-slate-400 light:text-slate-600 mt-4 text-base">من شغف الحروف وصياغتها، إلى توجيه دفة الحملات التسويقية بنجاح وإقناع.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-stretch">
+            <!-- Story Content Box -->
+            <div class="bg-slate-900 border border-slate-800/80 p-8 rounded-2xl flex flex-col justify-between hover:shadow-xl hover:shadow-primary-500/5 transition-all light:bg-white light:border-slate-200">
+                <div class="space-y-4">
+                    <div class="w-12 h-12 rounded-xl bg-primary-500/10 text-primary-400 flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-feather-pointed"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-100 dark:text-slate-100 light:text-slate-900">البداية، الشغف وريادة المحتوى</h3>
+                    <p class="text-slate-300 dark:text-slate-300 light:text-slate-600 leading-relaxed text-sm">
+                        أؤمن بأن المحتوى هو الملك الحقيقي لأي فكرة أو خدمة. بدأت رحلتي في التحرير الأدبي والصحفي باحثاً عن التفاصيل، ثم دمجت هذا الشغف بأدوات العصر الرقمي وعلم التسويق بالمحتوى والـ SEO.
+                    </p>
+                    <p class="text-slate-300 dark:text-slate-300 light:text-slate-600 leading-relaxed text-sm">
+                        اليوم، أعمل كحلقة وصل إبداعية بين الأفكار المعقدة والجمهور المستهدف من خلال تبسيطها في قوالب تحريرية باهرة، وبناء خطط تسويق مدروسة وموجهة بالأرقام والنتائج.
+                    </p>
+                </div>
+                <div class="mt-6 flex items-center gap-4 text-xs text-slate-400">
+                    <span><i class="fa-solid fa-graduation-cap ml-1 text-primary-400"></i> بكالوريوس في الإعلام والاتصال</span>
+                    <span><i class="fa-solid fa-certificate ml-1 text-secondary-400"></i> شهادة تسويق معتمدة من Google</span>
+                </div>
+            </div>
+
+            <!-- Dynamic Highlight stats Box -->
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-slate-900 border border-slate-800/80 p-6 rounded-2xl text-center flex flex-col justify-center items-center hover:scale-[1.02] transition-transform light:bg-white light:border-slate-200">
+                    <div class="w-10 h-10 rounded-full bg-accent-500/10 text-accent-500 flex items-center justify-center text-lg mb-2"><i class="fa-solid fa-globe"></i></div>
+                    <span class="block text-4xl font-extrabold text-accent-500">20+</span>
+                    <span class="text-xs text-slate-400 mt-2 font-semibold">عملاء في الوطن العربي وخارجه</span>
+                </div>
+
+                <div class="bg-slate-900 border border-slate-800/80 p-6 rounded-2xl text-center flex flex-col justify-center items-center hover:scale-[1.02] transition-transform light:bg-white light:border-slate-200">
+                    <div class="w-10 h-10 rounded-full bg-secondary-500/10 text-secondary-500 flex items-center justify-center text-lg mb-2"><i class="fa-solid fa-chart-line"></i></div>
+                    <span class="block text-4xl font-extrabold text-secondary-500">%300</span>
+                    <span class="text-xs text-slate-400 mt-2 font-semibold">معدل زيادة تفاعل الجماهير</span>
+                </div>
+
+                <div class="bg-slate-900 border border-slate-800/80 p-6 rounded-2xl text-center flex flex-col justify-center items-center hover:scale-[1.02] transition-transform light:bg-white light:border-slate-200">
+                    <div class="w-10 h-10 rounded-full bg-primary-500/10 text-primary-500 flex items-center justify-center text-lg mb-2"><i class="fa-solid fa-pen-fancy"></i></div>
+                    <span class="block text-4xl font-extrabold text-primary-500">3</span>
+                    <span class="text-xs text-slate-400 mt-2 font-semibold">كتـب مطبوعة منشورة</span>
+                </div>
+
+                <div class="bg-slate-900 border border-slate-800/80 p-6 rounded-2xl text-center flex flex-col justify-center items-center hover:scale-[1.02] transition-transform light:bg-white light:border-slate-200">
+                    <div class="w-10 h-10 rounded-full bg-red-500/10 text-red-500 flex items-center justify-center text-lg mb-2"><i class="fa-solid fa-newspaper"></i></div>
+                    <span class="block text-4xl font-extrabold text-red-500">100+</span>
+                    <span class="text-xs text-slate-400 mt-2 font-semibold">مقال صحفي وتحريري منشور</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="skills" class="py-20 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-16">
+            <h2 class="text-3xl font-extrabold text-white dark:text-white light:text-slate-900">المهارات المزدوجة التي أصنع بها الفارق</h2>
+            <div class="h-1 w-20 bg-gradient-to-r from-primary-500 to-secondary-500 mx-auto mt-4 rounded-full"></div>
+            <p class="text-slate-400 dark:text-slate-400 light:text-slate-600 mt-4 text-base">دمج الفن اللغوي الكلاسيكي بأدوات العصر الرقمي والتسويق الحديث لتلبية احتياجات سوق العمل الاستثنائي.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <!-- Editorial Skills Card -->
+            <div class="bg-slate-900/60 border border-slate-800/80 p-8 rounded-3xl space-y-8 light:bg-white light:border-slate-200 shadow-sm">
+                <div class="flex items-center gap-4">
+                    <span class="w-12 h-12 rounded-2xl bg-primary-500/10 text-primary-400 flex items-center justify-center text-2xl">
+                        <i class="fa-solid fa-highlighter"></i>
+                    </span>
+                    <div>
+                        <h3 class="text-2xl font-bold text-slate-100 dark:text-slate-100 light:text-slate-900">المهارات التحريرية والأدبية</h3>
+                        <p class="text-xs text-slate-400 dark:text-slate-400 light:text-slate-500">حرفية الكلمة وضبط المعنى وبلاغة التعبير</p>
+                    </div>
+                </div>
+
+                <!-- Progressive Skill Bars -->
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex justify-between items-center text-sm font-semibold mb-2">
+                            <span>التحرير الصحفي والتدقيق اللغوي المعمق</span>
+                            <span class="text-primary-400">%95</span>
+                        </div>
+                        <div class="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden light:bg-slate-200">
+                            <div class="h-full bg-gradient-to-r from-primary-600 to-primary-400 rounded-full" style="width: 95%"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between items-center text-sm font-semibold mb-2">
+                            <span>كتابة النصوص الإبداعية والقصص الملهمة</span>
+                            <span class="text-primary-400">%90</span>
+                        </div>
+                        <div class="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden light:bg-slate-200">
+                            <div class="h-full bg-gradient-to-r from-primary-600 to-primary-400 rounded-full" style="width: 90%"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between items-center text-sm font-semibold mb-2">
+                            <span>صياغة السيناريوهات والـ Copywriting للمرئيات</span>
+                            <span class="text-primary-400">%85</span>
+                        </div>
+                        <div class="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden light:bg-slate-200">
+                            <div class="h-full bg-gradient-to-r from-primary-600 to-primary-400 rounded-full" style="width: 85%"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between items-center text-sm font-semibold mb-2">
+                            <span>إعادة الصياغة وتبسيط المعارف الأكاديمية</span>
+                            <span class="text-primary-400">%92</span>
+                        </div>
+                        <div class="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden light:bg-slate-200">
+                            <div class="h-full bg-gradient-to-r from-primary-600 to-primary-400 rounded-full" style="width: 92%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Marketing Skills Card -->
+            <div class="bg-slate-900/60 border border-slate-800/80 p-8 rounded-3xl space-y-8 light:bg-white light:border-slate-200 shadow-sm">
+                <div class="flex items-center gap-4">
+                    <span class="w-12 h-12 rounded-2xl bg-secondary-500/10 text-secondary-400 flex items-center justify-center text-2xl">
+                        <i class="fa-solid fa-bullhorn"></i>
+                    </span>
+                    <div>
+                        <h3 class="text-2xl font-bold text-slate-100 dark:text-slate-100 light:text-slate-900">المهارات التسويقية والاستراتيجية</h3>
+                        <p class="text-xs text-slate-400 dark:text-slate-400 light:text-slate-500">تحليل الأسواق، تحسين محركات البحث وجذب الانتباه المباشر</p>
+                    </div>
+                </div>
+
+                <!-- Progressive Skill Bars -->
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex justify-between items-center text-sm font-semibold mb-2">
+                            <span>كتابة متوافقة مع محركات البحث (SEO Master)</span>
+                            <span class="text-secondary-400">%90</span>
+                        </div>
+                        <div class="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden light:bg-slate-200">
+                            <div class="h-full bg-gradient-to-r from-secondary-600 to-secondary-400 rounded-full" style="width: 90%"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between items-center text-sm font-semibold mb-2">
+                            <span>استراتيجيات التسويق بالمحتوى والخطط السنوية</span>
+                            <span class="text-secondary-400">%88</span>
+                        </div>
+                        <div class="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden light:bg-slate-200">
+                            <div class="h-full bg-gradient-to-r from-secondary-600 to-secondary-400 rounded-full" style="width: 88%"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between items-center text-sm font-semibold mb-2">
+                            <span>حملات التواصل الاجتماعي وكتابة الإعلانات الدعائية</span>
+                            <span class="text-secondary-400">%85</span>
+                        </div>
+                        <div class="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden light:bg-slate-200">
+                            <div class="h-full bg-gradient-to-r from-secondary-600 to-secondary-400 rounded-full" style="width: 85%"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between items-center text-sm font-semibold mb-2">
+                            <span>تحليلات الويب وأداء الزوار (Google Analytics & Search Console)</span>
+                            <span class="text-secondary-400">%80</span>
+                        </div>
+                        <div class="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden light:bg-slate-200">
+                            <div class="h-full bg-gradient-to-r from-secondary-600 to-secondary-400 rounded-full" style="width: 80%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="books" class="py-20 bg-slate-900/30 relative z-10 light:bg-slate-100/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-16">
+            <h2 class="text-3xl font-extrabold text-white dark:text-white light:text-slate-900">مؤلفات مطبوعة في كبرى دور النشر</h2>
+            <div class="h-1 w-20 bg-accent-500 mx-auto mt-4 rounded-full"></div>
+            <p class="text-slate-400 dark:text-slate-400 light:text-slate-600 mt-4 text-base">نتاج عقود من الفكر والكتابة المستمرة، متواجدة في معارض الكتب الدولية والمتاجر الرقمية.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Book 1 Card -->
+            <div class="bg-slate-900 border border-slate-800/80 p-6 rounded-3xl flex flex-col justify-between hover:border-slate-700 transition-all light:bg-white light:border-slate-200 shadow-lg">
+                <div class="book-container flex justify-center mb-6">
+                    <!-- Book spine mockup using CSS gradients -->
+                    <div class="book-spine w-40 h-56 rounded-r bg-gradient-to-l from-slate-900 via-emerald-800 to-emerald-600 relative shadow-2xl overflow-hidden flex flex-col justify-between p-4 text-white text-right">
+                        <span class="text-[8px] tracking-wider uppercase opacity-80 font-semibold text-accent-500">الفكر والأدب</span>
+                        <h4 class="text-sm font-extrabold leading-snug">رواية المفقود من الواقع</h4>
+                        <div class="border-t border-white/20 pt-2 flex justify-between items-center">
+                            <span class="text-[8px] opacity-75">دار النشر العالمية</span>
+                            <i class="fa-solid fa-bookmark text-accent-500 text-xs"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-3">
+                    <span class="px-2 py-1 rounded bg-emerald-500/10 text-emerald-400 text-xs font-semibold">رواية / سرد أدبي</span>
+                    <h3 class="text-xl font-bold text-slate-100 dark:text-slate-100 light:text-slate-900">المفقود من الواقع والسر المكتوم</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">تتناول الرواية فلسفة العوالم المتوازية بروح مشرقية تجمع بين الحداثة والخيال الفكري الخصب.</p>
+                </div>
+                <div class="pt-6 mt-6 border-t border-slate-800/80 flex items-center justify-between light:border-slate-200">
+                    <span class="text-xs text-slate-400">نُشرت في عام 2024</span>
+                    <button onclick="openBookModal('book1')" class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold transition-colors light:bg-slate-100 light:text-slate-800 light:hover:bg-slate-200">تفاصيل الكتاب <i class="fa-solid fa-arrow-left mr-1"></i></button>
+                </div>
+            </div>
+
+            <!-- Book 2 Card -->
+            <div class="bg-slate-900 border border-slate-800/80 p-6 rounded-3xl flex flex-col justify-between hover:border-slate-700 transition-all light:bg-white light:border-slate-200 shadow-lg">
+                <div class="book-container flex justify-center mb-6">
+                    <div class="book-spine w-40 h-56 rounded-r bg-gradient-to-l from-slate-900 via-indigo-900 to-indigo-600 relative shadow-2xl overflow-hidden flex flex-col justify-between p-4 text-white text-right">
+                        <span class="text-[8px] tracking-wider uppercase opacity-80 font-semibold text-accent-500">أدلة وكتب تعليمية</span>
+                        <h4 class="text-sm font-extrabold leading-snug">التسويق بالمحتوى والـ SEO</h4>
+                        <div class="border-t border-white/20 pt-2 flex justify-between items-center">
+                            <span class="text-[8px] opacity-75">أكاديمية التسويق</span>
+                            <i class="fa-solid fa-bookmark text-accent-500 text-xs"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-3">
+                    <span class="px-2 py-1 rounded bg-indigo-500/10 text-indigo-400 text-xs font-semibold">دليل استراتيجي / تعليمي</span>
+                    <h3 class="text-xl font-bold text-slate-100 dark:text-slate-100 light:text-slate-900">سحر التسويق بالمحتوى والـ SEO</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">أقوى مرجع عملي للشركات الناشئة لتعلم كيفية صياغة العناوين وتصدر نتائج البحث الأولى بدون ميزانية ضخمة.</p>
+                </div>
+                <div class="pt-6 mt-6 border-t border-slate-800/80 flex items-center justify-between light:border-slate-200">
+                    <span class="text-xs text-slate-400">نُشر في عام 2023</span>
+                    <button onclick="openBookModal('book2')" class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold transition-colors light:bg-slate-100 light:text-slate-800 light:hover:bg-slate-200">تفاصيل الكتاب <i class="fa-solid fa-arrow-left mr-1"></i></button>
+                </div>
+            </div>
+
+            <!-- Book 3 Card -->
+            <div class="bg-slate-900 border border-slate-800/80 p-6 rounded-3xl flex flex-col justify-between hover:border-slate-700 transition-all light:bg-white light:border-slate-200 shadow-lg">
+                <div class="book-container flex justify-center mb-6">
+                    <div class="book-spine w-40 h-56 rounded-r bg-gradient-to-l from-slate-900 via-amber-900 to-amber-600 relative shadow-2xl overflow-hidden flex flex-col justify-between p-4 text-white text-right">
+                        <span class="text-[8px] tracking-wider uppercase opacity-80 font-semibold text-white">مقالات ومجموعات</span>
+                        <h4 class="text-sm font-extrabold leading-snug">كلمات تلهم العالم</h4>
+                        <div class="border-t border-white/20 pt-2 flex justify-between items-center">
+                            <span class="text-[8px] opacity-75">دار الفكر العربي</span>
+                            <i class="fa-solid fa-bookmark text-white text-xs"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-3">
+                    <span class="px-2 py-1 rounded bg-amber-500/10 text-amber-400 text-xs font-semibold">نصوص / مقالات إلهامية</span>
+                    <h3 class="text-xl font-bold text-slate-100 dark:text-slate-100 light:text-slate-900">كلمات تلهم العالم المعاصر</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">مجموعة تأملية في التواصل البشري في زمن التحول الرقمي وكيف يمكن للكلمات الحقيقية أن تنقذ الإنسان من عزلته.</p>
+                </div>
+                <div class="pt-6 mt-6 border-t border-slate-800/80 flex items-center justify-between light:border-slate-200">
+                    <span class="text-xs text-slate-400">نُشر في عام 2022</span>
+                    <button onclick="openBookModal('book3')" class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold transition-colors light:bg-slate-100 light:text-slate-800 light:hover:bg-slate-200">تفاصيل الكتاب <i class="fa-solid fa-arrow-left mr-1"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="articles" class="py-20 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
+            <div class="text-right max-w-2xl">
+                <h2 class="text-3xl font-extrabold text-white dark:text-white light:text-slate-900">أحدث المقالات والأفكار المكتوبة</h2>
+                <div class="h-1 w-20 bg-primary-500 mt-4 rounded-full"></div>
+                <p class="text-slate-400 dark:text-slate-400 light:text-slate-600 mt-4 text-base">اكتشف خلاصة فكري وتجاربي العملية في مجالات الصحافة، الأدب، والتسويق الرقمي.</p>
+            </div>
+            
+            <!-- Filters for Categories -->
+            <div class="flex flex-wrap gap-2 text-xs font-semibold">
+                <button onclick="filterArticles('all')" class="filter-btn px-4 py-2.5 rounded-xl bg-primary-500 text-white transition-all shadow-md shadow-primary-500/10">الكل</button>
+                <button onclick="filterArticles('marketing')" class="filter-btn px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition-all light:bg-slate-100 light:text-slate-800 light:hover:bg-slate-200">تسويق وصناعة محتوى</button>
+                <button onclick="filterArticles('literary')" class="filter-btn px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition-all light:bg-slate-100 light:text-slate-800 light:hover:bg-slate-200">مراجعات وتحرير أدبي</button>
+                <button onclick="filterArticles('opinion')" class="filter-btn px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition-all light:bg-slate-100 light:text-slate-800 light:hover:bg-slate-200">رأي ونظريات رقمية</button>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="articlesGrid">
+            <!-- Article 1 Card -->
+            <div class="article-card bg-slate-900 border border-slate-800/80 rounded-3xl overflow-hidden hover:scale-[1.02] transition-all duration-300 flex flex-col justify-between shadow-md light:bg-white light:border-slate-200" data-category="marketing">
+                <div>
+                    <div class="h-48 w-full bg-gradient-to-tr from-emerald-600 to-indigo-700 relative flex items-center justify-center p-6 text-white text-center">
+                        <!-- Custom dynamic visual cover instead of static broken URLs -->
+                        <div class="space-y-2">
+                            <span class="text-xs bg-slate-900/60 px-2 py-1 rounded-full text-primary-400">SEO GUIDE</span>
+                            <h4 class="font-bold text-lg">تصدر محركات البحث عام 2026</h4>
+                        </div>
+                    </div>
+                    <div class="p-6 space-y-3">
+                        <div class="flex items-center gap-3 text-xs text-slate-400">
+                            <span><i class="fa-regular fa-calendar ml-1"></i> مايو 2026</span>
+                            <span>•</span>
+                            <span><i class="fa-regular fa-clock ml-1"></i> دقيقة قراءة 5</span>
+                        </div>
+                        <h3 class="text-xl font-bold hover:text-primary-400 transition-colors text-slate-100 dark:text-slate-100 light:text-slate-900">كيف غير الذكاء الاصطناعي معايير الـ SEO وكيف توظفه في كتابة المحتوى</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed line-clamp-3">نظرة معمقة حول تحول خوارزميات جوجل والتركيز على موثوقية المحتوى البشري، وكيف تصنع محتوى لا يُمكن استبداله بالآلة...</p>
+                    </div>
+                </div>
+                <div class="p-6 pt-0 mt-auto">
+                    <button onclick="openArticleModal('art1')" class="text-primary-400 hover:text-primary-300 text-xs font-bold inline-flex items-center gap-2">
+                        <span>قراءة المقال بالكامل</span>
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </</button>
+                </div>
+            </div>
+
+            <!-- Article 2 Card -->
+            <div class="article-card bg-slate-900 border border-slate-800/80 rounded-3xl overflow-hidden hover:scale-[1.02] transition-all duration-300 flex flex-col justify-between shadow-md light:bg-white light:border-slate-200" data-category="literary">
+                <div>
+                    <div class="h-48 w-full bg-gradient-to-tr from-amber-600 to-pink-700 relative flex items-center justify-center p-6 text-white text-center">
+                        <div class="space-y-2">
+                            <span class="text-xs bg-slate-900/60 px-2 py-1 rounded-full text-amber-400">EDITORIAL</span>
+                            <h4 class="font-bold text-lg">بين الكلاسيكية والحداثة</h4>
+                        </div>
+                    </div>
+                    <div class="p-6 space-y-3">
+                        <div class="flex items-center gap-3 text-xs text-slate-400">
+                            <span><i class="fa-regular fa-calendar ml-1"></i> أبريل 2026</span>
+                            <span>•</span>
+                            <span><i class="fa-regular fa-clock ml-1"></i> دقائق قراءة 8</span>
+                        </div>
+                        <h3 class="text-xl font-bold hover:text-primary-400 transition-colors text-slate-100 dark:text-slate-100 light:text-slate-900">جماليات السرد المشهدي في الرواية العربية الحديثة والواقعية السحرية</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed line-clamp-3">دراسة نقدية وفنية تفحص بنية النص الروائي الحديث ومستوى توظيف الصورة السينمائية في التعبير عن الفجوات الشعورية...</p>
+                    </div>
+                </div>
+                <div class="p-6 pt-0 mt-auto">
+                    <button onclick="openArticleModal('art2')" class="text-primary-400 hover:text-primary-300 text-xs font-bold inline-flex items-center gap-2">
+                        <span>قراءة المقال بالكامل</span>
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </</button>
+                </div>
+            </div>
+
+            <!-- Article 3 Card -->
+            <div class="article-card bg-slate-900 border border-slate-800/80 rounded-3xl overflow-hidden hover:scale-[1.02] transition-all duration-300 flex flex-col justify-between shadow-md light:bg-white light:border-slate-200" data-category="opinion">
+                <div>
+                    <div class="h-48 w-full bg-gradient-to-tr from-purple-600 to-blue-700 relative flex items-center justify-center p-6 text-white text-center">
+                        <div class="space-y-2">
+                            <span class="text-xs bg-slate-900/60 px-2 py-1 rounded-full text-purple-400">DIGITAL MIND</span>
+                            <h4 class="font-bold text-lg">علم النفس التسويقي وعيون الزائر</h4>
+                        </div>
+                    </div>
+                    <div class="p-6 space-y-3">
+                        <div class="flex items-center gap-3 text-xs text-slate-400">
+                            <span><i class="fa-regular fa-calendar ml-1"></i> مارس 2026</span>
+                            <span>•</span>
+                            <span><i class="fa-regular fa-clock ml-1"></i> دقائق قراءة 4</span>
+                        </div>
+                        <h3 class="text-xl font-bold hover:text-primary-400 transition-colors text-slate-100 dark:text-slate-100 light:text-slate-900">الترابط البصري وهندسة الانتباه: لماذا يقرأ الجمهور ما تكتب وكيف تثير فضوله؟</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed line-clamp-3">تحليل نفسي وتطبيقي لقواعد هندسة المحتوى وصناعة الترقب الإيجابي عبر بنية نصية هرمية مبسطة وسلسة...</p>
+                    </div>
+                </div>
+                <div class="p-6 pt-0 mt-auto">
+                    <button onclick="openArticleModal('art3')" class="text-primary-400 hover:text-primary-300 text-xs font-bold inline-flex items-center gap-2">
+                        <span>قراءة المقال بالكامل</span>
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="experience" class="py-20 bg-slate-900/40 relative z-10 light:bg-slate-100/30">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-16">
+            <h2 class="text-3xl font-extrabold text-white dark:text-white light:text-slate-900">مسيرة العمل وخبرات السنين</h2>
+            <div class="h-1 w-20 bg-primary-500 mx-auto mt-4 rounded-full"></div>
+            <p class="text-slate-400 dark:text-slate-400 light:text-slate-600 mt-4 text-base">محطات مهنية صقلت مهاراتي وأهلتني لقيادة وتحرير وتصميم كبرى الخطط.</p>
+        </div>
+
+        <!-- Vertical Timeline -->
+        <div class="relative border-r-2 border-slate-800 dark:border-slate-800 light:border-slate-200 mr-4 sm:mr-8 space-y-12">
+            <!-- Node 1 -->
+            <div class="relative pr-8 sm:pr-12">
+                <!-- Glowing node marker -->
+                <span class="absolute right-[-9px] top-1.5 w-4 h-4 rounded-full bg-primary-500 border-4 border-slate-950 dark:border-slate-950 light:border-slate-50 shadow-md"></span>
+                <div class="bg-slate-900 border border-slate-800/80 p-6 rounded-2xl hover:border-primary-500/50 transition-colors light:bg-white light:border-slate-200 shadow-sm">
+                    <div class="flex flex-wrap items-center justify-between mb-3 gap-2">
+                        <span class="text-xs font-semibold px-2.5 py-1 rounded bg-primary-500/10 text-primary-400">2024 - حتى الآن</span>
+                        <span class="text-xs text-slate-400">وكالة الإعلان الرقمي الرائدة</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-100 dark:text-slate-100 light:text-slate-900">مدير قسم تخطيط وكتابة المحتوى التسويقي (Copywriter Director)</h3>
+                    <p class="text-xs text-slate-400 mt-2 leading-relaxed">قيادة فريق من 5 كتاب لتطوير سيناريوهات الحملات البصرية وكتابة خطط SEO وتصدر محركات البحث لعلامات تجارية بارزة، مما حقق زيادة في المبيعات وتفاعل الجمهور بنسبة بلغت %45.</p>
+                </div>
+            </div>
+
+            <!-- Node 2 -->
+            <div class="relative pr-8 sm:pr-12">
+                <span class="absolute right-[-9px] top-1.5 w-4 h-4 rounded-full bg-secondary-500 border-4 border-slate-950 dark:border-slate-950 light:border-slate-50 shadow-md"></span>
+                <div class="bg-slate-900 border border-slate-800/80 p-6 rounded-2xl hover:border-secondary-500/50 transition-colors light:bg-white light:border-slate-200 shadow-sm">
+                    <div class="flex flex-wrap items-center justify-between mb-3 gap-2">
+                        <span class="text-xs font-semibold px-2.5 py-1 rounded bg-secondary-500/10 text-secondary-400">2021 - 2024</span>
+                        <span class="text-xs text-slate-400">دار الفكر والنشر العريقة</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-100 dark:text-slate-100 light:text-slate-900">كبير المحررين والمراجعين الأدبيين</h3>
+                    <p class="text-xs text-slate-400 mt-2 leading-relaxed">توليت الإشراف الكامل والمراجعة اللغوية والجمالية لأكثر من 30 رواية وكتاب فكري وبحثي، ودعم الكتاب المبتدئين لصقل نصوصهم وأساليبهم السردية بمهنية فائقة.</p>
+                </div>
+            </div>
+
+            <!-- Node 3 -->
+            <div class="relative pr-8 sm:pr-12">
+                <span class="absolute right-[-9px] top-1.5 w-4 h-4 rounded-full bg-accent-500 border-4 border-slate-950 dark:border-slate-950 light:border-slate-50 shadow-md"></span>
+                <div class="bg-slate-900 border border-slate-800/80 p-6 rounded-2xl hover:border-accent-500/50 transition-colors light:bg-white light:border-slate-200 shadow-sm">
+                    <div class="flex flex-wrap items-center justify-between mb-3 gap-2">
+                        <span class="text-xs font-semibold px-2.5 py-1 rounded bg-accent-500/10 text-accent-500">2019 - 2021</span>
+                        <span class="text-xs text-slate-400">موقع صدى التقنية والتدوين</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-100 dark:text-slate-100 light:text-slate-900">كاتب محتوى أول ومتخصص SEO</h3>
+                    <p class="text-xs text-slate-400 mt-2 leading-relaxed">كتابة مقالات متوافقة كلياً مع شروط السيو في قطاعات التقنية والاقتصاد الرقمي، وتوجيه حركة الزيارات العضوية للموقع (Organic Traffic) بنمو مستدام تجاوز المليون زائر شهرياً.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="contact" class="py-20 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-gradient-to-tr from-slate-900 via-slate-900 to-indigo-950/40 rounded-3xl border border-slate-800/80 p-8 sm:p-12 light:from-white light:via-slate-50 light:to-blue-50 light:border-slate-200 shadow-2xl">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+                
+                <!-- Contact Info Column -->
+                <div class="lg:col-span-5 space-y-6">
+                    <h2 class="text-3xl font-extrabold text-white dark:text-white light:text-slate-900">دعنا نكتب فصلاً جديداً معاً!</h2>
+                    <p class="text-slate-400 dark:text-slate-400 light:text-slate-600 text-sm leading-relaxed">
+                        سواء كنت تبحث عن استشارة لتصميم خطتك التسويقية القادمة، أو تدقيق وتحرير روايتك القادمة، أو ترغب في التعاون كلياً في صياغة سيناريوهات مميزة.. أنا هنا لمساعدتك!
+                    </p>
+
+                    <!-- Contact Details cards -->
+                    <div class="space-y-4 pt-4">
+                        <div class="flex items-center gap-4">
+                            <span class="w-10 h-10 rounded-xl bg-primary-500/10 text-primary-400 flex items-center justify-center"><i class="fa-regular fa-envelope"></i></span>
+                            <div>
+                                <span class="block text-xs text-slate-400">البريد الإلكتروني المباشر</span>
+                                <a href="mailto:your.email@example.com" class="text-sm font-semibold hover:text-primary-400">your.email@example.com</a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4">
+                            <span class="w-10 h-10 rounded-xl bg-secondary-500/10 text-secondary-400 flex items-center justify-center"><i class="fa-solid fa-phone"></i></span>
+                            <div>
+                                <span class="block text-xs text-slate-400">رقم الهاتف / الواتساب الرسمي</span>
+                                <a href="tel:+9660000000" dir="ltr" class="text-sm font-semibold hover:text-secondary-400">+966 50 000 0000</a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4">
+                            <span class="w-10 h-10 rounded-xl bg-accent-500/10 text-accent-500 flex items-center justify-center"><i class="fa-solid fa-location-dot"></i></span>
+                            <div>
+                                <span class="block text-xs text-slate-400">المقر الحالي للعمل</span>
+                                <span class="text-sm font-semibold">الرياض، المملكة العربية السعودية / عن بعد</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Social Icons links -->
+                    <div class="pt-6">
+                        <p class="text-xs text-slate-400 mb-3">تابع منشوري وتغريداتي المهنية:</p>
+                        <div class="flex gap-3">
+                            <a href="#" class="w-10 h-10 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 flex items-center justify-center transition-colors light:bg-slate-200 light:text-slate-800 light:hover:bg-slate-300"><i class="fa-brands fa-linkedin-in"></i></a>
+                            <a href="#" class="w-10 h-10 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 flex items-center justify-center transition-colors light:bg-slate-200 light:text-slate-800 light:hover:bg-slate-300"><i class="fa-brands fa-x-twitter"></i></a>
+                            <a href="#" class="w-10 h-10 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 flex items-center justify-center transition-colors light:bg-slate-200 light:text-slate-800 light:hover:bg-slate-300"><i class="fa-brands fa-instagram"></i></a>
+                            <a href="#" class="w-10 h-10 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 flex items-center justify-center transition-colors light:bg-slate-200 light:text-slate-800 light:hover:bg-slate-300"><i class="fa-brands fa-behance"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Column -->
+                <div class="lg:col-span-7">
+                    <form id="contactForm" onsubmit="handleFormSubmit(event)" class="space-y-5">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-400 mb-2">الاسم الكريم *</label>
+                                <input type="text" required class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800/80 focus:border-primary-500 focus:outline-none transition-colors light:bg-white light:border-slate-300 light:text-slate-900" placeholder="الاسم بالكامل">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-400 mb-2">البريد الإلكتروني *</label>
+                                <input type="email" required class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800/80 focus:border-primary-500 focus:outline-none transition-colors light:bg-white light:border-slate-300 light:text-slate-900" placeholder="name@example.com">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-2">نوع التعاون المطلوب</label>
+                            <select class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800/80 focus:border-primary-500 focus:outline-none transition-colors light:bg-white light:border-slate-300 light:text-slate-900">
+                                <option>استشارة تسويق بالمحتوى وخطط SEO</option>
+                                <option>تدقيق ومراجعة أدبية لرواية أو كتاب</option>
+                                <option>كتابة نصوص إعلانية وسيناريوهات (Copywriting)</option>
+                                <option>آخر / فكرة ريادية جديدة</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-2">تفاصيل الفكرة أو المشروع *</label>
+                            <textarea required rows="5" class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800/80 focus:border-primary-500 focus:outline-none transition-colors light:bg-white light:border-slate-300 light:text-slate-900" placeholder="يرجى كتابة فكرة موجزة هنا.. وسأرد عليك سريعاً"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-primary-600 to-secondary-600 hover:from-primary-500 hover:to-secondary-500 text-white font-bold text-base shadow-lg shadow-primary-500/20 transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                            <span>إرسال الرسالة الإبداعية</span>
+                            <i class="fa-regular fa-paper-plane"></i>
+                        </button>
+                    </form>
+
+                    <!-- Thank you success banner -->
+                    <div id="formSuccess" class="hidden mt-4 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-center animate-fade-in text-sm font-semibold">
+                        <i class="fa-solid fa-circle-check ml-2"></i> شكرًا جزيلاً لتواصلك! تم إرسال رسالتك بنجاح، وسأقوم بالرد عليك خلال الـ 24 ساعة القادمة.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="border-t border-slate-900 dark:border-slate-900 light:border-slate-200 py-10 relative z-10 glass-effect">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-slate-400">
+        <p>© 2026 جميع الحقوق محفوظة. تم تطوير الموقع بكل شغف كبوابة شخصية للأعمال والريادة.</p>
+        <div class="flex gap-6">
+            <a href="#about" class="hover:text-primary-400 transition-colors">من أنا</a>
+            <a href="#books" class="hover:text-primary-400 transition-colors">المؤلفات</a>
+            <a href="#articles" class="hover:text-primary-400 transition-colors">المدونة</a>
+        </div>
+    </div>
+</footer>
+
+<!-- Book details modal overlay -->
+<div id="bookModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md hidden animate-fade-in">
+    <div class="bg-slate-900 border border-slate-800 max-w-lg w-full rounded-3xl p-6 sm:p-8 space-y-6 relative light:bg-white light:border-slate-200 shadow-2xl">
+        <button onclick="closeBookModal()" class="absolute top-4 left-4 w-10 h-10 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center transition-colors light:bg-slate-100 light:text-slate-800">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div id="bookModalContent" class="space-y-4">
+            <!-- Dynamically populated via JavaScript -->
+        </div>
+    </div>
+</div>
+
+<!-- Article details modal overlay -->
+<div id="articleModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md hidden animate-fade-in">
+    <div class="bg-slate-900 border border-slate-800 max-w-2xl w-full rounded-3xl p-6 sm:p-8 space-y-6 relative max-h-[90vh] overflow-y-auto light:bg-white light:border-slate-200 shadow-2xl">
+        <button onclick="closeArticleModal()" class="absolute top-4 left-4 w-10 h-10 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center transition-colors light:bg-slate-100 light:text-slate-800">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div id="articleModalContent" class="space-y-4">
+            <!-- Dynamically populated via JavaScript -->
+        </div>
+    </div>
+</div>
+
+<script>
+    // Theme Switcher (Dark/Light Mode)
+    function toggleTheme() {
+        const html = document.documentElement;
+        const icon = document.getElementById('themeIcon');
+        if (html.classList.contains('dark')) {
+            html.classList.remove('dark');
+            html.classList.add('light');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        } else {
+            html.classList.remove('light');
+            html.classList.add('dark');
+            icon.classList.remove('fa-sun');
+            icon.classList.add('fa-moon');
+        }
+    }
+
+    // Mobile Hamburger Menu Toggle
+    function toggleMobileMenu() {
+        const menu = document.getElementById('mobileMenu');
+        const icon = document.getElementById('mobileMenuIcon');
+        if (menu.classList.contains('hidden')) {
+            menu.classList.remove('hidden');
+            icon.classList.remove('fa-bars');
+            icon.classList.add('fa-xmark');
+        } else {
+            menu.classList.add('hidden');
+            icon.classList.remove('fa-xmark');
+            icon.classList.add('fa-bars');
+        }
+    }
+
+    // Dynamic typewriter typing effect
+    const typewriterElement = document.getElementById('typewriter');
+    const typewriterPhrases = [
+        "أصنع محتوى ملهم وناجح.",
+        "أصيغ سيناريوهات وقصص ملهمة.",
+        "أقود حملات SEO تتصدر جوجل.",
+        "أحقق النمو للمشاريع الريادية."
+    ];
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+
+    function typeEffect() {
+        const currentPhrase = typewriterPhrases[phraseIndex];
+        if (isDeleting) {
+            typewriterElement.textContent = currentPhrase.substring(0, charIndex - 1);
+            charIndex--;
+        } else {
+            typewriterElement.textContent = currentPhrase.substring(0, charIndex + 1);
+            charIndex++;
+        }
+
+        let typingSpeed = isDeleting ? 40 : 100;
+
+        if (!isDeleting && charIndex === currentPhrase.length) {
+            typingSpeed = 2000; // Pause at the end of word
+            isDeleting = true;
+        } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            phraseIndex = (phraseIndex + 1) % typewriterPhrases.length;
+            typingSpeed = 500; // Pause before starting next phrase
+        }
+
+        setTimeout(typeEffect, typingSpeed);
+    }
+
+    // Dynamic filtering for Articles
+    function filterArticles(category) {
+        const cards = document.querySelectorAll('.article-card');
+        const buttons = document.querySelectorAll('.filter-btn');
+
+        // Update active button styles
+        buttons.forEach(btn => {
+            btn.classList.remove('bg-primary-500', 'text-white');
+            btn.classList.add('bg-slate-800', 'text-slate-300', 'light:bg-slate-100', 'light:text-slate-800');
+        });
+        
+        // Find current button and light it up
+        const targetBtn = Array.from(buttons).find(btn => {
+            if (category === 'all' && btn.textContent.trim() === 'الكل') return true;
+            if (category === 'marketing' && btn.textContent.includes('تسويق')) return true;
+            if (category === 'literary' && btn.textContent.includes('مراجعات')) return true;
+            if (category === 'opinion' && btn.textContent.includes('رأي')) return true;
+            return false;
+        });
+        if (targetBtn) {
+            targetBtn.classList.add('bg-primary-500', 'text-white');
+            targetBtn.classList.remove('bg-slate-800', 'text-slate-300', 'light:bg-slate-100', 'light:text-slate-800');
+        }
+
+        // Filter cards smoothly
+        cards.forEach(card => {
+            if (category === 'all' || card.getAttribute('data-category') === category) {
+                card.style.display = 'flex';
+                card.classList.add('animate-fade-in');
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    // Books Modal details DB-like
+    const bookData = {
+        book1: {
+            title: "المفقود من الواقع والسر المكتوم",
+            genre: "رواية سردية أدبية",
+            publisher: "دار النشر العالمية - بيروت",
+            year: "2024",
+            synopsis: "تمزج الرواية بين الواقع اليومي المعاش وقوة الخيال المطلق، لتستعرض قصة بطل باحث عن شغفه يتنقل عبر العصور بحثاً عن سر الكلمة المفقودة التي تحرك قلوب الجماهير. نالت مراجعات ممتازة في ملحق جريدة الأهرام الثقافي وصنفت كواحدة من أكثر الروايات التجريبية جذباً للقارئ الشاب.",
+            cta: "متوفرة حالياً في جرير والمنصات الكبرى كأمازون كيندل."
+        },
+        book2: {
+            title: "سحر التسويق بالمحتوى والـ SEO",
+            genre: "دليل استراتيجي تجاري وتعليمي",
+            publisher: "أكاديمية المعرفة الرقمية",
+            year: "2023",
+            synopsis: "تم تصنيف هذا الكتاب كأفضل مرجع عربي مبسط وصادق، يضم 12 فصلاً يجمع بين الفن الأدبي وصياغة الجمل الجذابة، وبين المعايير التقنية لخوارزميات البحث الحديثة. يتضمن دراسات حالة حقيقية لحملات حققت عائد استثماري خيالي.",
+            cta: "يمكنك تحميل نسخة تمهيدية مجانية أو الشراء المباشر عبر اتخاذ زر الطلب أدناه."
+        },
+        book3: {
+            title: "كلمات تلهم العالم المعاصر",
+            genre: "نصوص ومقالات إلهامية وفلسفية",
+            publisher: "دار الفكر العربي للنشر والتوزيع",
+            year: "2022",
+            synopsis: "كتاب نصوص يجمع بين ثنايا صفحاته تأملات في شأن الاتصال الرقمي الحديث، وكيف تتقلص العواطف البشرية لتصبح مجرد نصوص قصيرة وإيموجي. يقدم الكتاب رؤية فلسفية حول كيفية صياغة خطابات ملهمة تؤسس للتفاعل السليم والصادق.",
+            cta: "موجود بجميع دور العرض في المعارض العربية الكبرى."
+        }
+    };
+
+    function openBookModal(id) {
+        const item = bookData[id];
+        const content = document.getElementById('bookModalContent');
+        content.innerHTML = `
+            <span class="inline-block px-3 py-1 rounded bg-accent-500/10 text-accent-500 text-xs font-bold">${item.genre}</span>
+            <h3 class="text-2xl font-bold text-slate-100 dark:text-slate-100 light:text-slate-900 mt-2">${item.title}</h3>
+            <p class="text-xs text-slate-400"><strong>دار النشر:</strong> ${item.publisher} | <strong>تاريخ الإصدار:</strong> ${item.year}</p>
+            <hr class="border-slate-800 dark:border-slate-800 light:border-slate-200">
+            <h4 class="font-semibold text-sm">ملخص موجز وتفاصيل العمل:</h4>
+            <p class="text-slate-300 dark:text-slate-300 light:text-slate-600 text-sm leading-relaxed">${item.synopsis}</p>
+            <p class="text-xs text-primary-400 font-semibold bg-primary-500/5 p-3 rounded-xl border border-primary-500/10"><i class="fa-solid fa-circle-info ml-1"></i> ${item.cta}</p>
+            <div class="flex gap-3 pt-4">
+                <a href="#contact" onclick="closeBookModal()" class="flex-1 py-3 text-center rounded-xl bg-gradient-to-r from-primary-600 to-secondary-600 text-white font-bold text-sm">طلب نسخة مخصصة وموقعة</a>
+            </div>
+        `;
+        const modal = document.getElementById('bookModal');
+        modal.classList.remove('hidden');
+    }
+
+    function closeBookModal() {
+        document.getElementById('bookModal').classList.add('hidden');
+    }
+
+    // Article full details popups DB
+    const articleData = {
+        art1: {
+            title: "كيف غير الذكاء الاصطناعي معايير الـ SEO وكيف توظفه في كتابة المحتوى البشري",
+            meta: "نشر في مايو 2026 • 5 دقائق قراءة • قسم التسويق والمحتوى",
+            content: `
+                <p>لم تعد محركات البحث تقتصر على قراءة الكلمات المفتاحية المكررة، بل غدت تفهم مقاصد الزوار العميقة من خلال نماذج الذكاء الاصطناعي المطورة. إن سر تفوق كاتب المحتوى العصري يكمن في تقديم قيمة مضافة استثنائية (Original Value) لا يملكها الذكاء الاصطناعي المعتمد على تجميع المعارف السابقة فقط.</p>
+                <p class="font-semibold text-primary-400 mt-3">كيف تصنع محتوى مقاوم للتكرار والآلية؟</p>
+                <ul class="list-disc list-inside space-y-2 text-sm text-slate-300 mt-2">
+                    <li>أدخل دراسات حالة شخصية وقصص نجاح حقيقية خضتها بنفسك.</li>
+                    <li>اكتب للزائر مباشرة وبأسلوب طبيعي ومقنع ولا تشغل نفسك بالتكرار الاصطناعي للكلمات المفتاحية.</li>
+                    <li>استثمر في صياغة العناوين الجاذبة التي تلامس مشكلة واقعية يواجهها الباحث.</li>
+                </ul>
+                <p class="mt-4">التغيير الحقيقي يبدأ بالتحول من حشو الكلمات إلى تلبية نية المستخدم الباحث وتقديم الحلول السحرية السريعة والمنظمة.</p>
+            `
+        },
+        art2: {
+            title: "جماليات السرد المشهدي في الرواية العربية الحديثة والواقعية السحرية",
+            meta: "نشر في أبريل 2026 • 8 دقائق قراءة • قسم التحرير والأدب",
+            content: `
+                <p>إن الرواية الحديثة لم تعد حكاية مجردة، بل تحولت إلى فن معماري بصري مذهل. من خلال السرد المشهدي، يتمكن الكاتب من جعل المتلقي يرى الأحداث، ويشم رائحة الأمكنة، ويسمع همسات الأبطال.</p>
+                <p class="font-semibold text-accent-500 mt-3">كيف تصنع عملاً روائياً يشد القارئ؟</p>
+                <p class="text-sm leading-relaxed mt-2">أظهر للناس المشاهد بدلاً من مجرد إخبارهم بها (Show, Don't Tell). فبدلاً من قول 'كان يوماً حزيناً'، صف برودة الجدران وصوت الرياح المترددة خلف النوافذ المهجورة.</p>
+                <p class="mt-4">هذا الدليل والمقال يبسط للقارئ تقنيات السرد السينمائي، مستشهداً بروايات عربية استطاعت المزج بمهارة بين السيرة الفردية والواقعية السحرية الشرقية.</p>
+            `
+        },
+        art3: {
+            title: "الترابط البصري وهندسة الانتباه: لماذا يقرأ الجمهور ما تكتب وكيف تثير فضوله؟",
+            meta: "نشر في مارس 2026 • 4 دقائق قراءة • قسم الرأي ونظريات رقمية",
+            content: `
+                <p>يمتلك زائر الإنترنت اليوم مدة انتباه قصيرة جداً لا تتجاوز 8 ثوانٍ! إذا لم تجذبه من الكلمة الأولى والفقرة الافتتاحية الساحرة، فستخسره نهائياً لصالح منافس آخر.</p>
+                <p class="font-semibold text-secondary-400 mt-3">استراتيجيات 'هندسة الانتباه' الناجحة:</p>
+                <ul class="list-decimal list-inside space-y-2 text-sm text-slate-300 mt-2">
+                    <li>ابدأ دائماً بسؤال صادم أو حقيقة غريبة تدق جرس الإنذار لدى القارئ.</li>
+                    <li>قسّم المحتوى إلى قطع قصيرة ومريحة للعين، واحرص على استخدام خطوط مريحة (كخط القاهرة أو تاجويل).</li>
+                    <li>استعن بالعناوين الجانبية الجذابة والواضحة التي تعطي نظرة سريعة للمقال بأكمله.</li>
+                </ul>
+                <p class="mt-4">عندما تتقن فن ترابط العناوين وهندسة الانتباه البصري والنصي، ستضمن أن قارئك سيتصفح كل كلمة باهتمام وتفاعل.</p>
+            `
+        }
+    };
+
+    function openArticleModal(id) {
+        const item = articleData[id];
+        const content = document.getElementById('articleModalContent');
+        content.innerHTML = `
+            <span class="inline-block px-3 py-1 rounded bg-primary-500/10 text-primary-400 text-xs font-bold">تصفح المقال بالكامل</span>
+            <h3 class="text-2xl sm:text-3xl font-bold text-slate-100 dark:text-slate-100 light:text-slate-900 mt-2 leading-snug">${item.title}</h3>
+            <p class="text-xs text-slate-400 mt-1"><i class="fa-regular fa-bookmark ml-1 text-primary-500"></i> ${item.meta}</p>
+            <hr class="border-slate-800 dark:border-slate-800 light:border-slate-200 my-4">
+            <div class="space-y-4 text-slate-300 dark:text-slate-300 light:text-slate-700 leading-relaxed text-base">
+                ${item.content}
+            </div>
+        `;
+        const modal = document.getElementById('articleModal');
+        modal.classList.remove('hidden');
+    }
+
+    function closeArticleModal() {
+        document.getElementById('articleModal').classList.add('hidden');
+    }
+
+    // Contact Form handling with local visual feedback
+    function handleFormSubmit(event) {
+        event.preventDefault();
+        // Hide form fields & Show success banner
+        document.getElementById('contactForm').style.opacity = '0.5';
+        document.getElementById('formSuccess').classList.remove('hidden');
+        
+        // Reset form inputs
+        document.getElementById('contactForm').reset();
+        
+        setTimeout(() => {
+            document.getElementById('contactForm').style.opacity = '1';
+        }, 4000);
+    }
+
+    // Dynamic floating particle system canvas behind the hero
+    const canvas = document.getElementById('particleCanvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+
+    class Particle {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 2 + 1;
+            this.speedX = Math.random() * 0.5 - 0.25;
+            this.speedY = Math.random() * 0.5 - 0.25;
+            this.alpha = Math.random() * 0.5 + 0.1;
+        }
+
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+
+            if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+            if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+        }
+
+        draw() {
+            ctx.fillStyle = `rgba(16, 185, 129, ${this.alpha})`; // Elegant emerald particles
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    function initParticles() {
+        particles = [];
+        const numParticles = Math.floor((canvas.width * canvas.height) / 10000);
+        for (let i = 0; i < numParticles; i++) {
+            particles.push(new Particle());
+        }
+    }
+
+    function animateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+            p.update();
+            p.draw();
+        });
+        requestAnimationFrame(animateParticles);
+    }
+
+    // Initialize all dynamic tools upon screen load
+    window.onload = function() {
+        resizeCanvas();
+        initParticles();
+        animateParticles();
+        typeEffect(); // Start dynamic typewriter
+    };
+
+    window.addEventListener('resize', () => {
+        resizeCanvas();
+        initParticles();
+    });
+
+    // Elegant Sticky header scroll behavior
+    window.addEventListener('scroll', () => {
+        const header = document.getElementById('mainHeader');
+        if (window.scrollY > 50) {
+            header.classList.add('shadow-lg', 'py-1');
+        } else {
+            header.classList.remove('shadow-lg', 'py-1');
+        }
+    });
+</script>
+
+</body>
+</html>
