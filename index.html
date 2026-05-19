@@ -204,8 +204,8 @@
                         <!-- Custom designed graphic profile badge -->
                         <div class="text-center p-6 space-y-6">
                             <div class="w-32 h-32 mx-auto rounded-full bg-gradient-to-tr from-primary-500 to-secondary-500 p-1">
-                                <!-- Placeholders for professional portrait or high-end illustration -->
-                                <me.PNG"الملف التعريفي" class="w-full h-full object-cover rounded-full border-4 border-slate-900" onerror="this.src='https://placehold.co/400x400/0f172a/10b981?text=Me'">
+                                <!-- تم ربط الصورة الشخصية بـ me.PNG مع وجود صورة احتياطية ذكية -->
+                                <img src="images/me.PNG" alt="الملف التعريفي" class="w-full h-full object-cover rounded-full border-4 border-slate-900" onerror="this.src='https://placehold.co/400x400/0f172a/10b981?text=Me'">
                             </div>
                             <div>
                                 <h3 class="text-2xl font-bold">الاسم الشخصي الكامل</h3>
@@ -419,13 +419,19 @@
             <!-- Book 1 Card -->
             <div class="bg-slate-900 border border-slate-800/80 p-6 rounded-3xl flex flex-col justify-between hover:border-slate-700 transition-all light:bg-white light:border-slate-200 shadow-lg">
                 <div class="book-container flex justify-center mb-6">
-                    <!-- Book spine mockup using CSS gradients -->
-                    <div class="book-spine w-40 h-56 rounded-r bg-gradient-to-l from-slate-900 via-emerald-800 to-emerald-600 relative shadow-2xl overflow-hidden flex flex-col justify-between p-4 text-white text-right">
-                        <span class="text-[8px] tracking-wider uppercase opacity-80 font-semibold text-accent-500">الفكر والأدب</span>
-                        <h4 class="text-sm font-extrabold leading-snug">رواية المفقود من الواقع</h4>
-                        <div class="border-t border-white/20 pt-2 flex justify-between items-center">
-                            <span class="text-[8px] opacity-75">دار النشر العالمية</span>
-                            <i class="fa-solid fa-bookmark text-accent-500 text-xs"></i>
+                    <!-- Book spine mockup with smart image layer and fallback -->
+                    <div class="book-spine w-40 h-56 rounded-r bg-gradient-to-l from-slate-900 via-emerald-800 to-emerald-600 relative shadow-2xl overflow-hidden flex flex-col justify-between text-white text-right">
+                        <!-- صورتك الحقيقية للكتاب الأول تظهر في المقدمة وتغطي التدرج اللوني في حال وجودها -->
+                        <img src="images/book1.jpg" alt="غلاف رواية المفقود من الواقع" class="absolute inset-0 w-full h-full object-cover z-10" onerror="this.style.display='none';">
+                        
+                        <!-- التصميم الاحتياطي أسفل الصورة يظهر تلقائياً إذا اختفت الصورة -->
+                        <div class="flex flex-col h-full justify-between p-4 relative z-0">
+                            <span class="text-[8px] tracking-wider uppercase opacity-80 font-semibold text-accent-500">الفكر والأدب</span>
+                            <h4 class="text-sm font-extrabold leading-snug">رواية المفقود من الواقع</h4>
+                            <div class="border-t border-white/20 pt-2 flex justify-between items-center mt-auto">
+                                <span class="text-[8px] opacity-75">دار النشر العالمية</span>
+                                <i class="fa-solid fa-bookmark text-accent-500 text-xs"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -443,12 +449,18 @@
             <!-- Book 2 Card -->
             <div class="bg-slate-900 border border-slate-800/80 p-6 rounded-3xl flex flex-col justify-between hover:border-slate-700 transition-all light:bg-white light:border-slate-200 shadow-lg">
                 <div class="book-container flex justify-center mb-6">
-                    <div class="book-spine w-40 h-56 rounded-r bg-gradient-to-l from-slate-900 via-indigo-900 to-indigo-600 relative shadow-2xl overflow-hidden flex flex-col justify-between p-4 text-white text-right">
-                        <span class="text-[8px] tracking-wider uppercase opacity-80 font-semibold text-accent-500">أدلة وكتب تعليمية</span>
-                        <h4 class="text-sm font-extrabold leading-snug">التسويق بالمحتوى والـ SEO</h4>
-                        <div class="border-t border-white/20 pt-2 flex justify-between items-center">
-                            <span class="text-[8px] opacity-75">أكاديمية التسويق</span>
-                            <i class="fa-solid fa-bookmark text-accent-500 text-xs"></i>
+                    <!-- Book spine mockup for book2 -->
+                    <div class="book-spine w-40 h-56 rounded-r bg-gradient-to-l from-slate-900 via-indigo-900 to-indigo-600 relative shadow-2xl overflow-hidden flex flex-col justify-between text-white text-right">
+                        <!-- صورتك الحقيقية للكتاب الثاني -->
+                        <img src="images/book2.jpg" alt="غلاف كتاب التسويق بالمحتوى والـ SEO" class="absolute inset-0 w-full h-full object-cover z-10" onerror="this.style.display='none';">
+                        
+                        <div class="flex flex-col h-full justify-between p-4 relative z-0">
+                            <span class="text-[8px] tracking-wider uppercase opacity-80 font-semibold text-accent-500">أدلة وكتب تعليمية</span>
+                            <h4 class="text-sm font-extrabold leading-snug">التسويق بالمحتوى والـ SEO</h4>
+                            <div class="border-t border-white/20 pt-2 flex justify-between items-center mt-auto">
+                                <span class="text-[8px] opacity-75">أكاديمية التسويق</span>
+                                <i class="fa-solid fa-bookmark text-accent-500 text-xs"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -466,12 +478,17 @@
             <!-- Book 3 Card -->
             <div class="bg-slate-900 border border-slate-800/80 p-6 rounded-3xl flex flex-col justify-between hover:border-slate-700 transition-all light:bg-white light:border-slate-200 shadow-lg">
                 <div class="book-container flex justify-center mb-6">
-                    <div class="book-spine w-40 h-56 rounded-r bg-gradient-to-l from-slate-900 via-amber-900 to-amber-600 relative shadow-2xl overflow-hidden flex flex-col justify-between p-4 text-white text-right">
-                        <span class="text-[8px] tracking-wider uppercase opacity-80 font-semibold text-white">مقالات ومجموعات</span>
-                        <h4 class="text-sm font-extrabold leading-snug">كلمات تلهم العالم</h4>
-                        <div class="border-t border-white/20 pt-2 flex justify-between items-center">
-                            <span class="text-[8px] opacity-75">دار الفكر العربي</span>
-                            <i class="fa-solid fa-bookmark text-white text-xs"></i>
+                    <!-- Book spine mockup for book3 (Prepared in case you want to use book3.jpg in the future) -->
+                    <div class="book-spine w-40 h-56 rounded-r bg-gradient-to-l from-slate-900 via-amber-900 to-amber-600 relative shadow-2xl overflow-hidden flex flex-col justify-between text-white text-right">
+                        <img src="images/book3.jpg" alt="غلاف كتاب كلمات تلهم العالم" class="absolute inset-0 w-full h-full object-cover z-10" onerror="this.style.display='none';">
+                        
+                        <div class="flex flex-col h-full justify-between p-4 relative z-0">
+                            <span class="text-[8px] tracking-wider uppercase opacity-80 font-semibold text-white">مقالات ومجموعات</span>
+                            <h4 class="text-sm font-extrabold leading-snug">كلمات تلهم العالم</h4>
+                            <div class="border-t border-white/20 pt-2 flex justify-between items-center mt-auto">
+                                <span class="text-[8px] opacity-75">دار الفكر العربي</span>
+                                <i class="fa-solid fa-bookmark text-white text-xs"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -511,9 +528,13 @@
             <!-- Article 1 Card -->
             <div class="article-card bg-slate-900 border border-slate-800/80 rounded-3xl overflow-hidden hover:scale-[1.02] transition-all duration-300 flex flex-col justify-between shadow-md light:bg-white light:border-slate-200" data-category="marketing">
                 <div>
-                    <div class="h-48 w-full bg-gradient-to-tr from-emerald-600 to-indigo-700 relative flex items-center justify-center p-6 text-white text-center">
-                        <!-- Custom dynamic visual cover instead of static broken URLs -->
-                        <div class="space-y-2">
+                    <!-- Container with a background gradient fallback and article1.jpg support -->
+                    <div class="h-48 w-full bg-gradient-to-tr from-emerald-600 to-indigo-700 relative overflow-hidden flex items-center justify-center text-white text-center">
+                        <!-- صورتك الحقيقية للمقال الأول -->
+                        <img src="images/article1.jpg" alt="صورة المقال الأول" class="absolute inset-0 w-full h-full object-cover z-10" onerror="this.style.display='none';">
+                        
+                        <!-- العنوان والتصنيف الإحتياطيين في حال عدم توفر الصورة -->
+                        <div class="space-y-2 relative z-0 p-6">
                             <span class="text-xs bg-slate-900/60 px-2 py-1 rounded-full text-primary-400">SEO GUIDE</span>
                             <h4 class="font-bold text-lg">تصدر محركات البحث عام 2026</h4>
                         </div>
@@ -532,15 +553,18 @@
                     <button onclick="openArticleModal('art1')" class="text-primary-400 hover:text-primary-300 text-xs font-bold inline-flex items-center gap-2">
                         <span>قراءة المقال بالكامل</span>
                         <i class="fa-solid fa-arrow-left"></i>
-                    </</button>
+                    </button>
                 </div>
             </div>
 
             <!-- Article 2 Card -->
             <div class="article-card bg-slate-900 border border-slate-800/80 rounded-3xl overflow-hidden hover:scale-[1.02] transition-all duration-300 flex flex-col justify-between shadow-md light:bg-white light:border-slate-200" data-category="literary">
                 <div>
-                    <div class="h-48 w-full bg-gradient-to-tr from-amber-600 to-pink-700 relative flex items-center justify-center p-6 text-white text-center">
-                        <div class="space-y-2">
+                    <div class="h-48 w-full bg-gradient-to-tr from-amber-600 to-pink-700 relative overflow-hidden flex items-center justify-center text-white text-center">
+                        <!-- صورتك الحقيقية للمقال الثاني (مهيئة للعمل تلقائياً بمجرد إضافتها) -->
+                        <img src="images/article2.jpg" alt="صورة المقال الثاني" class="absolute inset-0 w-full h-full object-cover z-10" onerror="this.style.display='none';">
+                        
+                        <div class="space-y-2 relative z-0 p-6">
                             <span class="text-xs bg-slate-900/60 px-2 py-1 rounded-full text-amber-400">EDITORIAL</span>
                             <h4 class="font-bold text-lg">بين الكلاسيكية والحداثة</h4>
                         </div>
@@ -559,15 +583,18 @@
                     <button onclick="openArticleModal('art2')" class="text-primary-400 hover:text-primary-300 text-xs font-bold inline-flex items-center gap-2">
                         <span>قراءة المقال بالكامل</span>
                         <i class="fa-solid fa-arrow-left"></i>
-                    </</button>
+                    </button>
                 </div>
             </div>
 
             <!-- Article 3 Card -->
             <div class="article-card bg-slate-900 border border-slate-800/80 rounded-3xl overflow-hidden hover:scale-[1.02] transition-all duration-300 flex flex-col justify-between shadow-md light:bg-white light:border-slate-200" data-category="opinion">
                 <div>
-                    <div class="h-48 w-full bg-gradient-to-tr from-purple-600 to-blue-700 relative flex items-center justify-center p-6 text-white text-center">
-                        <div class="space-y-2">
+                    <div class="h-48 w-full bg-gradient-to-tr from-purple-600 to-blue-700 relative overflow-hidden flex items-center justify-center text-white text-center">
+                        <!-- صورتك الحقيقية للمقال الثالث -->
+                        <img src="images/article3.jpg" alt="صورة المقال الثالث" class="absolute inset-0 w-full h-full object-cover z-10" onerror="this.style.display='none';">
+                        
+                        <div class="space-y-2 relative z-0 p-6">
                             <span class="text-xs bg-slate-900/60 px-2 py-1 rounded-full text-purple-400">DIGITAL MIND</span>
                             <h4 class="font-bold text-lg">علم النفس التسويقي وعيون الزائر</h4>
                         </div>
