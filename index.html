@@ -100,7 +100,7 @@
             <a href="#contact" class="text-sm font-semibold hover:text-primary-400 transition-colors">تواصل معي</a>
         </nav>
 
-        <!-- Right action buttons: Language toggle / Theme Toggle / Contact button -->
+        <!-- Right action buttons -->
         <div class="flex items-center gap-4">
             <!-- Theme Toggle Button -->
             <button onclick="toggleTheme()" class="w-10 h-10 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 flex items-center justify-center transition-all border border-slate-700/50 light:bg-slate-200 light:hover:bg-slate-300 light:text-slate-800 light:border-slate-300" title="تبديل المظهر">
@@ -135,7 +135,6 @@
 
 <section id="hero" class="relative pt-32 pb-20 md:pt-44 md:pb-32 flex items-center overflow-hidden z-10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative">
-        <!-- Abstract gradient blobs for aesthetic look -->
         <div class="absolute -top-12 -left-12 w-96 h-96 bg-primary-500/10 rounded-full blur-3xl"></div>
         <div class="absolute -bottom-12 -right-12 w-96 h-96 bg-secondary-500/10 rounded-full blur-3xl"></div>
 
@@ -195,17 +194,15 @@
                 </div>
             </div>
 
-            <!-- Hero Right: Dynamic Graphics showing personal avatar/art -->
+            <!-- Hero Right: الصورة الشخصية me.PNG -->
             <div class="lg:col-span-5 flex justify-center order-1 lg:order-2">
                 <div class="relative w-72 h-72 sm:w-80 sm:h-80 lg:w-96 lg:h-96">
-                    <!-- Rotating gradient outline -->
                     <div class="absolute inset-0 bg-gradient-to-tr from-primary-500 via-accent-500 to-secondary-500 rounded-3xl opacity-30 blur-2xl animate-pulse"></div>
                     <div class="absolute inset-2 bg-slate-900 rounded-3xl overflow-hidden border border-slate-800 flex items-center justify-center light:bg-white light:border-slate-200">
-                        <!-- Custom designed graphic profile badge -->
-                        <div class="text-center p-6 space-y-6">
+                        <div class="text-center p-6 space-y-6 w-full">
                             <div class="w-32 h-32 mx-auto rounded-full bg-gradient-to-tr from-primary-500 to-secondary-500 p-1">
-                                <!-- تم ربط الصورة الشخصية بـ me.PNG مع وجود صورة احتياطية ذكية -->
-                                <img src="images/me.PNG" alt="الملف التعريفي" class="w-full h-full object-cover rounded-full border-4 border-slate-900" onerror="this.src='https://placehold.co/400x400/0f172a/10b981?text=Me'">
+                                <!-- الصورة الشخصية باسم me.PNG داخل مجلد images -->
+                                <img src="images/me.PNG" id="img-me" alt="الملف التعريفي" class="w-full h-full object-cover rounded-full border-4 border-slate-900" onerror="handleImageError(this, 'Me')">
                             </div>
                             <div>
                                 <h3 class="text-2xl font-bold">الاسم الشخصي الكامل</h3>
@@ -233,7 +230,6 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-stretch">
-            <!-- Story Content Box -->
             <div class="bg-slate-900 border border-slate-800/80 p-8 rounded-2xl flex flex-col justify-between hover:shadow-xl hover:shadow-primary-500/5 transition-all light:bg-white light:border-slate-200">
                 <div class="space-y-4">
                     <div class="w-12 h-12 rounded-xl bg-primary-500/10 text-primary-400 flex items-center justify-center text-xl mb-4">
@@ -304,7 +300,6 @@
                     </div>
                 </div>
 
-                <!-- Progressive Skill Bars -->
                 <div class="space-y-6">
                     <div>
                         <div class="flex justify-between items-center text-sm font-semibold mb-2">
@@ -360,7 +355,6 @@
                     </div>
                 </div>
 
-                <!-- Progressive Skill Bars -->
                 <div class="space-y-6">
                     <div>
                         <div class="flex justify-between items-center text-sm font-semibold mb-2">
@@ -416,15 +410,12 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Book 1 Card -->
+            <!-- Book 1 Card (book1.jpg) -->
             <div class="bg-slate-900 border border-slate-800/80 p-6 rounded-3xl flex flex-col justify-between hover:border-slate-700 transition-all light:bg-white light:border-slate-200 shadow-lg">
                 <div class="book-container flex justify-center mb-6">
-                    <!-- Book spine mockup with smart image layer and fallback -->
                     <div class="book-spine w-40 h-56 rounded-r bg-gradient-to-l from-slate-900 via-emerald-800 to-emerald-600 relative shadow-2xl overflow-hidden flex flex-col justify-between text-white text-right">
-                        <!-- صورتك الحقيقية للكتاب الأول تظهر في المقدمة وتغطي التدرج اللوني في حال وجودها -->
-                        <img src="images/book1" alt="غلاف رواية المفقود من الواقع" class="absolute inset-0 w-full h-full object-cover z-10" onerror="this.style.display='none';">
-                        
-                        <!-- التصميم الاحتياطي أسفل الصورة يظهر تلقائياً إذا اختفت الصورة -->
+                        <!-- صورة الكتاب الأول الحقيقية في مجلد images -->
+                        <img src="images/book1.jpg" id="img-book1" alt="غلاف رواية المفقود من الواقع" class="absolute inset-0 w-full h-full object-cover z-10" onerror="handleImageError(this, 'Book1')">
                         <div class="flex flex-col h-full justify-between p-4 relative z-0">
                             <span class="text-[8px] tracking-wider uppercase opacity-80 font-semibold text-accent-500">الفكر والأدب</span>
                             <h4 class="text-sm font-extrabold leading-snug">رواية المفقود من الواقع</h4>
@@ -446,14 +437,12 @@
                 </div>
             </div>
 
-            <!-- Book 2 Card -->
+            <!-- Book 2 Card (book2.jpg) -->
             <div class="bg-slate-900 border border-slate-800/80 p-6 rounded-3xl flex flex-col justify-between hover:border-slate-700 transition-all light:bg-white light:border-slate-200 shadow-lg">
                 <div class="book-container flex justify-center mb-6">
-                    <!-- Book spine mockup for book2 -->
                     <div class="book-spine w-40 h-56 rounded-r bg-gradient-to-l from-slate-900 via-indigo-900 to-indigo-600 relative shadow-2xl overflow-hidden flex flex-col justify-between text-white text-right">
-                        <!-- صورتك الحقيقية للكتاب الثاني -->
-                        <img src="images/book2.jpg" alt="غلاف كتاب التسويق بالمحتوى والـ SEO" class="absolute inset-0 w-full h-full object-cover z-10" onerror="this.style.display='none';">
-                        
+                        <!-- صورة الكتاب الثاني الحقيقية في مجلد images -->
+                        <img src="images/book2.jpg" id="img-book2" alt="غلاف كتاب التسويق بالمحتوى والـ SEO" class="absolute inset-0 w-full h-full object-cover z-10" onerror="handleImageError(this, 'Book2')">
                         <div class="flex flex-col h-full justify-between p-4 relative z-0">
                             <span class="text-[8px] tracking-wider uppercase opacity-80 font-semibold text-accent-500">أدلة وكتب تعليمية</span>
                             <h4 class="text-sm font-extrabold leading-snug">التسويق بالمحتوى والـ SEO</h4>
@@ -475,13 +464,11 @@
                 </div>
             </div>
 
-            <!-- Book 3 Card -->
+            <!-- Book 3 Card (صورة افتراضية اختيارية) -->
             <div class="bg-slate-900 border border-slate-800/80 p-6 rounded-3xl flex flex-col justify-between hover:border-slate-700 transition-all light:bg-white light:border-slate-200 shadow-lg">
                 <div class="book-container flex justify-center mb-6">
-                    <!-- Book spine mockup for book3 (Prepared in case you want to use book3.jpg in the future) -->
                     <div class="book-spine w-40 h-56 rounded-r bg-gradient-to-l from-slate-900 via-amber-900 to-amber-600 relative shadow-2xl overflow-hidden flex flex-col justify-between text-white text-right">
-                        <img src="images/book3.jpg" alt="غلاف كتاب كلمات تلهم العالم" class="absolute inset-0 w-full h-full object-cover z-10" onerror="this.style.display='none';">
-                        
+                        <img src="images/book3.jpg" id="img-book3" alt="غلاف كتاب كلمات تلهم العالم" class="absolute inset-0 w-full h-full object-cover z-10" onerror="handleImageError(this, 'Book3')">
                         <div class="flex flex-col h-full justify-between p-4 relative z-0">
                             <span class="text-[8px] tracking-wider uppercase opacity-80 font-semibold text-white">مقالات ومجموعات</span>
                             <h4 class="text-sm font-extrabold leading-snug">كلمات تلهم العالم</h4>
@@ -515,7 +502,6 @@
                 <p class="text-slate-400 dark:text-slate-400 light:text-slate-600 mt-4 text-base">اكتشف خلاصة فكري وتجاربي العملية في مجالات الصحافة، الأدب، والتسويق الرقمي.</p>
             </div>
             
-            <!-- Filters for Categories -->
             <div class="flex flex-wrap gap-2 text-xs font-semibold">
                 <button onclick="filterArticles('all')" class="filter-btn px-4 py-2.5 rounded-xl bg-primary-500 text-white transition-all shadow-md shadow-primary-500/10">الكل</button>
                 <button onclick="filterArticles('marketing')" class="filter-btn px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition-all light:bg-slate-100 light:text-slate-800 light:hover:bg-slate-200">تسويق وصناعة محتوى</button>
@@ -525,15 +511,12 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="articlesGrid">
-            <!-- Article 1 Card -->
+            <!-- Article 1 Card (article1.jpg) -->
             <div class="article-card bg-slate-900 border border-slate-800/80 rounded-3xl overflow-hidden hover:scale-[1.02] transition-all duration-300 flex flex-col justify-between shadow-md light:bg-white light:border-slate-200" data-category="marketing">
                 <div>
-                    <!-- Container with a background gradient fallback and article1.jpg support -->
                     <div class="h-48 w-full bg-gradient-to-tr from-emerald-600 to-indigo-700 relative overflow-hidden flex items-center justify-center text-white text-center">
-                        <!-- صورتك الحقيقية للمقال الأول -->
-                        <img src="images/article1.jpg" alt="صورة المقال الأول" class="absolute inset-0 w-full h-full object-cover z-10" onerror="this.style.display='none';">
-                        
-                        <!-- العنوان والتصنيف الإحتياطيين في حال عدم توفر الصورة -->
+                        <!-- صورة المقال الأول من مجلد images -->
+                        <img src="images/article1.jpg" id="img-article1" alt="صورة المقال الأول" class="absolute inset-0 w-full h-full object-cover z-10" onerror="handleImageError(this, 'Article1')">
                         <div class="space-y-2 relative z-0 p-6">
                             <span class="text-xs bg-slate-900/60 px-2 py-1 rounded-full text-primary-400">SEO GUIDE</span>
                             <h4 class="font-bold text-lg">تصدر محركات البحث عام 2026</h4>
@@ -561,9 +544,7 @@
             <div class="article-card bg-slate-900 border border-slate-800/80 rounded-3xl overflow-hidden hover:scale-[1.02] transition-all duration-300 flex flex-col justify-between shadow-md light:bg-white light:border-slate-200" data-category="literary">
                 <div>
                     <div class="h-48 w-full bg-gradient-to-tr from-amber-600 to-pink-700 relative overflow-hidden flex items-center justify-center text-white text-center">
-                        <!-- صورتك الحقيقية للمقال الثاني (مهيئة للعمل تلقائياً بمجرد إضافتها) -->
-                        <img src="images/article2.jpg" alt="صورة المقال الثاني" class="absolute inset-0 w-full h-full object-cover z-10" onerror="this.style.display='none';">
-                        
+                        <img src="images/article2.jpg" id="img-article2" alt="صورة المقال الثاني" class="absolute inset-0 w-full h-full object-cover z-10" onerror="handleImageError(this, 'Article2')">
                         <div class="space-y-2 relative z-0 p-6">
                             <span class="text-xs bg-slate-900/60 px-2 py-1 rounded-full text-amber-400">EDITORIAL</span>
                             <h4 class="font-bold text-lg">بين الكلاسيكية والحداثة</h4>
@@ -591,9 +572,7 @@
             <div class="article-card bg-slate-900 border border-slate-800/80 rounded-3xl overflow-hidden hover:scale-[1.02] transition-all duration-300 flex flex-col justify-between shadow-md light:bg-white light:border-slate-200" data-category="opinion">
                 <div>
                     <div class="h-48 w-full bg-gradient-to-tr from-purple-600 to-blue-700 relative overflow-hidden flex items-center justify-center text-white text-center">
-                        <!-- صورتك الحقيقية للمقال الثالث -->
-                        <img src="images/article3.jpg" alt="صورة المقال الثالث" class="absolute inset-0 w-full h-full object-cover z-10" onerror="this.style.display='none';">
-                        
+                        <img src="images/article3.jpg" id="img-article3" alt="صورة المقال الثالث" class="absolute inset-0 w-full h-full object-cover z-10" onerror="handleImageError(this, 'Article3')">
                         <div class="space-y-2 relative z-0 p-6">
                             <span class="text-xs bg-slate-900/60 px-2 py-1 rounded-full text-purple-400">DIGITAL MIND</span>
                             <h4 class="font-bold text-lg">علم النفس التسويقي وعيون الزائر</h4>
@@ -613,7 +592,7 @@
                     <button onclick="openArticleModal('art3')" class="text-primary-400 hover:text-primary-300 text-xs font-bold inline-flex items-center gap-2">
                         <span>قراءة المقال بالكامل</span>
                         <i class="fa-solid fa-arrow-left"></i>
-                    </</button>
+                    </button>
                 </div>
             </div>
         </div>
@@ -628,11 +607,9 @@
             <p class="text-slate-400 dark:text-slate-400 light:text-slate-600 mt-4 text-base">محطات مهنية صقلت مهاراتي وأهلتني لقيادة وتحرير وتصميم كبرى الخطط.</p>
         </div>
 
-        <!-- Vertical Timeline -->
         <div class="relative border-r-2 border-slate-800 dark:border-slate-800 light:border-slate-200 mr-4 sm:mr-8 space-y-12">
             <!-- Node 1 -->
             <div class="relative pr-8 sm:pr-12">
-                <!-- Glowing node marker -->
                 <span class="absolute right-[-9px] top-1.5 w-4 h-4 rounded-full bg-primary-500 border-4 border-slate-950 dark:border-slate-950 light:border-slate-50 shadow-md"></span>
                 <div class="bg-slate-900 border border-slate-800/80 p-6 rounded-2xl hover:border-primary-500/50 transition-colors light:bg-white light:border-slate-200 shadow-sm">
                     <div class="flex flex-wrap items-center justify-between mb-3 gap-2">
@@ -685,7 +662,6 @@
                         سواء كنت تبحث عن استشارة لتصميم خطتك التسويقية القادمة، أو تدقيق وتحرير روايتك القادمة، أو ترغب في التعاون كلياً في صياغة سيناريوهات مميزة.. أنا هنا لمساعدتك!
                     </p>
 
-                    <!-- Contact Details cards -->
                     <div class="space-y-4 pt-4">
                         <div class="flex items-center gap-4">
                             <span class="w-10 h-10 rounded-xl bg-primary-500/10 text-primary-400 flex items-center justify-center"><i class="fa-regular fa-envelope"></i></span>
@@ -759,7 +735,6 @@
                         </button>
                     </form>
 
-                    <!-- Thank you success banner -->
                     <div id="formSuccess" class="hidden mt-4 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-center animate-fade-in text-sm font-semibold">
                         <i class="fa-solid fa-circle-check ml-2"></i> شكرًا جزيلاً لتواصلك! تم إرسال رسالتك بنجاح، وسأقوم بالرد عليك خلال الـ 24 ساعة القادمة.
                     </div>
@@ -786,9 +761,7 @@
         <button onclick="closeBookModal()" class="absolute top-4 left-4 w-10 h-10 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center transition-colors light:bg-slate-100 light:text-slate-800">
             <i class="fa-solid fa-xmark"></i>
         </button>
-        <div id="bookModalContent" class="space-y-4">
-            <!-- Dynamically populated via JavaScript -->
-        </div>
+        <div id="bookModalContent" class="space-y-4"></div>
     </div>
 </div>
 
@@ -798,13 +771,123 @@
         <button onclick="closeArticleModal()" class="absolute top-4 left-4 w-10 h-10 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center transition-colors light:bg-slate-100 light:text-slate-800">
             <i class="fa-solid fa-xmark"></i>
         </button>
-        <div id="articleModalContent" class="space-y-4">
-            <!-- Dynamically populated via JavaScript -->
+        <div id="articleModalContent" class="space-y-4"></div>
+    </div>
+</div>
+
+<div id="imageDebuggerWidget" class="fixed bottom-4 left-4 z-50">
+    <!-- Floating Button -->
+    <button onclick="toggleDebuggerPanel()" class="w-14 h-14 rounded-full bg-red-600 hover:bg-red-500 text-white flex items-center justify-center shadow-lg transition-all animate-bounce" title="مساعد فحص وحل مشكلة الصور">
+        <i class="fa-solid fa-screwdriver-wrench text-xl"></i>
+    </button>
+    
+    <!-- Collapsible Debugger Panel -->
+    <div id="debuggerPanel" class="hidden absolute bottom-16 left-0 w-80 sm:w-96 bg-slate-900 border border-slate-800 p-5 rounded-2xl shadow-2xl text-slate-100 font-sans leading-relaxed text-xs">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-3">
+            <span class="font-bold text-sm text-red-400"><i class="fa-solid fa-bug ml-1"></i> فاحص مسارات الصور الذكي</span>
+            <button onclick="toggleDebuggerPanel()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-times text-sm"></i></button>
+        </div>
+        <p class="text-slate-400 mb-4 text-[10px]">تقوم هذه الأداة بفحص موقعك الفعلي على جيت هاب لتخبرك لماذا لا تظهر الصور بدقة بالغة. انقر على الفحص أدناه:</p>
+        
+        <button onclick="runDiagnosticTest()" class="w-full py-2 bg-red-600 hover:bg-red-500 font-bold rounded-lg text-white text-xs mb-4 transition-colors">
+            بدء فحص الروابط والملفات العميقة
+        </button>
+
+        <div id="diagnosticResults" class="space-y-3 max-h-48 overflow-y-auto pr-1">
+            <div class="text-slate-500 text-center py-2">انقر على الزر أعلاه للبدء...</div>
+        </div>
+        
+        <div class="mt-4 pt-3 border-t border-slate-800 text-[10px] text-slate-400">
+            * احذف هذا الزر من الكود البرمجي بمجرد ظهور صورك بنجاح!
         </div>
     </div>
 </div>
 
 <script>
+    // Safe image fallback system to prevent ugly browser broken-image icons
+    function handleImageError(imageElement, altType) {
+        // Safe styling & console warning
+        console.warn(`[Image Fail]: Failed to load image at path: "${imageElement.getAttribute('src')}"`);
+        
+        // Custom fallbacks to ensure beauty
+        if (altType === 'Me') {
+            imageElement.src = 'https://placehold.co/400x400/0f172a/10b981?text=Me';
+        } else {
+            // Hide the actual image tag to let the HTML CSS book-mockup background gradients show cleanly
+            imageElement.style.display = 'none';
+        }
+    }
+
+    // Toggle Debugger Panel
+    function toggleDebuggerPanel() {
+        const panel = document.getElementById('debuggerPanel');
+        panel.classList.toggle('hidden');
+    }
+
+    // Automatic diagnostic fetch to check why images are 404
+    function runDiagnosticTest() {
+        const resultsContainer = document.getElementById('diagnosticResults');
+        resultsContainer.innerHTML = '<div class="text-yellow-400 text-center py-2 animate-pulse"><i class="fa-solid fa-spinner fa-spin ml-2"></i> جاري فحص السيرفر والمسارات...</div>';
+        
+        const imagesToTest = [
+            { id: 'me.PNG', path: 'images/me.PNG', title: 'صورتك الشخصية (me.PNG)' },
+            { id: 'book1.jpg', path: 'images/book1.jpg', title: 'غلاف كتابك الأول (book1.jpg)' },
+            { id: 'book2.jpg', path: 'images/book2.jpg', title: 'غلاف كتابك الثاني (book2.jpg)' },
+            { id: 'article1.jpg', path: 'images/article1.jpg', title: 'صورة مقالك الأول (article1.jpg)' }
+        ];
+
+        let completed = 0;
+        let htmlOutput = '';
+
+        // Get actual directory root of Github Pages
+        const currentUrlRoot = window.location.href.substring(0, window.location.href.lastIndexOf('/') + 1);
+
+        imagesToTest.forEach(img => {
+            const absoluteUrl = currentUrlRoot + img.path;
+            
+            // Try fetching the resource
+            fetch(absoluteUrl, { method: 'HEAD' })
+                .then(response => {
+                    if (response.ok) {
+                        htmlOutput += `
+                            <div class="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30">
+                                <span class="font-semibold text-emerald-400 block"><i class="fa-solid fa-check-circle ml-1"></i> ${img.title}</span>
+                                <span class="text-[10px] text-slate-400 block mt-1">الموقع قادر على قراءتها بنجاح! إذا كانت لا تظهر، امسح ذاكرة المتصفح عبر Ctrl+F5.</span>
+                            </div>
+                        `;
+                    } else {
+                        htmlOutput += `
+                            <div class="p-2.5 rounded-xl bg-red-500/10 border border-red-500/30 space-y-1 text-right">
+                                <span class="font-semibold text-red-400 block"><i class="fa-solid fa-circle-exclamation ml-1"></i> ${img.title}</span>
+                                <span class="text-[10px] text-slate-300 block">خطأ بالسيرفر: <b>${response.status} (غير موجود)</b></span>
+                                <span class="text-[9px] text-slate-400 block break-all">الرابط المطلوب: <code class="text-yellow-500 bg-black/40 px-1 rounded">${absoluteUrl}</code></span>
+                                <div class="text-[9px] text-red-300 pt-1 border-t border-red-500/20">
+                                    💡 <b>توجيه:</b> تأكد من رفع المجلد باسم <code class="text-white">images</code> تماماً بحروف صغيرة، وأن الملف بداخله بنفس الاسم والامتداد بالضبط.
+                                </div>
+                            </div>
+                        `;
+                    }
+                    finalize();
+                })
+                .catch(err => {
+                    htmlOutput += `
+                        <div class="p-2.5 rounded-xl bg-yellow-500/10 border border-yellow-500/30">
+                            <span class="font-semibold text-yellow-400 block"><i class="fa-solid fa-triangle-exclamation ml-1"></i> ${img.title}</span>
+                            <span class="text-[10px] text-slate-300 block">خطأ غير متوقع بالاتصال بالشبكة.</span>
+                        </div>
+                    `;
+                    finalize();
+                });
+        });
+
+        function finalize() {
+            completed++;
+            if (completed === imagesToTest.length) {
+                resultsContainer.innerHTML = htmlOutput;
+            }
+        }
+    }
+
     // Theme Switcher (Dark/Light Mode)
     function toggleTheme() {
         const html = document.documentElement;
@@ -878,13 +961,11 @@
         const cards = document.querySelectorAll('.article-card');
         const buttons = document.querySelectorAll('.filter-btn');
 
-        // Update active button styles
         buttons.forEach(btn => {
             btn.classList.remove('bg-primary-500', 'text-white');
             btn.classList.add('bg-slate-800', 'text-slate-300', 'light:bg-slate-100', 'light:text-slate-800');
         });
         
-        // Find current button and light it up
         const targetBtn = Array.from(buttons).find(btn => {
             if (category === 'all' && btn.textContent.trim() === 'الكل') return true;
             if (category === 'marketing' && btn.textContent.includes('تسويق')) return true;
@@ -897,7 +978,6 @@
             targetBtn.classList.remove('bg-slate-800', 'text-slate-300', 'light:bg-slate-100', 'light:text-slate-800');
         }
 
-        // Filter cards smoothly
         cards.forEach(card => {
             if (category === 'all' || card.getAttribute('data-category') === category) {
                 card.style.display = 'flex';
@@ -908,7 +988,7 @@
         });
     }
 
-    // Books Modal details DB-like
+    // Books Modal DB
     const bookData = {
         book1: {
             title: "المفقود من الواقع والسر المكتوم",
@@ -951,8 +1031,7 @@
                 <a href="#contact" onclick="closeBookModal()" class="flex-1 py-3 text-center rounded-xl bg-gradient-to-r from-primary-600 to-secondary-600 text-white font-bold text-sm">طلب نسخة مخصصة وموقعة</a>
             </div>
         `;
-        const modal = document.getElementById('bookModal');
-        modal.classList.remove('hidden');
+        document.getElementById('bookModal').classList.remove('hidden');
     }
 
     function closeBookModal() {
@@ -1013,24 +1092,18 @@
                 ${item.content}
             </div>
         `;
-        const modal = document.getElementById('articleModal');
-        modal.classList.remove('hidden');
+        document.getElementById('articleModal').classList.remove('hidden');
     }
 
     function closeArticleModal() {
         document.getElementById('articleModal').classList.add('hidden');
     }
 
-    // Contact Form handling with local visual feedback
     function handleFormSubmit(event) {
         event.preventDefault();
-        // Hide form fields & Show success banner
         document.getElementById('contactForm').style.opacity = '0.5';
         document.getElementById('formSuccess').classList.remove('hidden');
-        
-        // Reset form inputs
         document.getElementById('contactForm').reset();
-        
         setTimeout(() => {
             document.getElementById('contactForm').style.opacity = '1';
         }, 4000);
@@ -1059,13 +1132,12 @@
         update() {
             this.x += this.speedX;
             this.y += this.speedY;
-
             if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
             if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
         }
 
         draw() {
-            ctx.fillStyle = `rgba(16, 185, 129, ${this.alpha})`; // Elegant emerald particles
+            ctx.fillStyle = `rgba(16, 185, 129, ${this.alpha})`;
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
             ctx.fill();
@@ -1089,12 +1161,11 @@
         requestAnimationFrame(animateParticles);
     }
 
-    // Initialize all dynamic tools upon screen load
     window.onload = function() {
         resizeCanvas();
         initParticles();
         animateParticles();
-        typeEffect(); // Start dynamic typewriter
+        typeEffect();
     };
 
     window.addEventListener('resize', () => {
@@ -1102,7 +1173,6 @@
         initParticles();
     });
 
-    // Elegant Sticky header scroll behavior
     window.addEventListener('scroll', () => {
         const header = document.getElementById('mainHeader');
         if (window.scrollY > 50) {
